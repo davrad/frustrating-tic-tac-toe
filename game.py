@@ -103,7 +103,7 @@ class Game():
         for string in strings:
             print(string)
             time.sleep(1)
-        print("Do you play as two, or alone against the frustrating AI? (Enter '1' or '2' for number of players): ")
+        print("Do you want play as two, or alone against the frustrating AI? (Enter '1' or '2' for number of players): ")
 
         number = 0
         while not right_number(number):
@@ -135,7 +135,7 @@ def minmax(board, player_char, move, depth=0):
     # Values to represent they're invalid
     move = -100
     score = -100
-            # Resets the 'over' state if player wants to play again
+    
     # Try out every possible move and call minmax recursively
     for i in range(9):
         if board.field[i // 3][i % 3] != '':

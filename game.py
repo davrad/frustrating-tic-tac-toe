@@ -59,13 +59,15 @@ class Game:
             self.first_turn = False
 
         print("Where do you want to set your mark?:")
-        print("Enter from 1 to 9")
+        print("Plase enter a number from 1 to 9")
         valid_move = False
 
         while not valid_move:
             pos = self.get_user_input_number()
+            if pos == 0:
+                exit(0)
             pos -= 1
-            valid_move = self.board.check_valid_move(pos)
+            valid_move = self.board.check_valid_move(pos)  
             if not valid_move:
                 print("Move not possible.")
 
@@ -105,8 +107,8 @@ class Game:
             number = self.get_user_input_number()
             if not right_number(number):
                 print("Please enter '1' to play against the Computer or '2' if you play with a friend.")
-
         self.single_player = number - 1
+        print("If you want to quit please enter '0', when prompted to check a field.")
 
     def print_winner(self, winner):
 
@@ -127,6 +129,8 @@ def minmax(board, player_char, move, depth=0):
     player_won = board.game_finished()
     if player_won:
         score = 10 - depth if (player_won == player_char) else depth - 10
+        if player_won == True:  
+            score = 0 
         return score, move
 
     # Values to represent they're invalid
@@ -147,7 +151,7 @@ def minmax(board, player_char, move, depth=0):
         # No need to get best move out of this call, since we already have it in 'i'
         move_score = -minmax(new_board, opponent, i, depth + 1)[0]
 
-        if move_score > score:
+        if move_score >= score:
             score = move_score
             move = i
 

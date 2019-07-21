@@ -52,7 +52,8 @@ class Board:
             return False
         return self.field[pos // 3][pos % 3] == ''
 
-    def update_board(self, pos, char):
+    def update_board(self, pos: int, char: str):
+        """Inserts in the field at the given position the given char"""
         self.field[pos // 3][pos % 3] = char
 
     def check_draw(self) -> bool:

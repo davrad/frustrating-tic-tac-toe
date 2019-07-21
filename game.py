@@ -26,7 +26,7 @@ class Game:
             system('clear')
 
     def play_game(self):
-        """Starts one instance of Tic-tac-toe"""
+        """Starts one instance of a Tic-tac-toe game"""
         self.board.draw_field([['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9']])
         while True:
             pos = self.get_player_turn() if self.player_turn else self.get_other_player_turn()
@@ -73,7 +73,7 @@ class Game:
     def get_ai_turn(self) -> int:
         """Gets the move for the computer player"""
         print("Calculating...")
-        # If computer draws first, make it random, otherwise same move
+        # Randomize the move if it is the first turn, otherwise the computer will make the same move
         if self.first_turn:
             self.first_turn = False
             return int(random.uniform(0, 9))
@@ -85,21 +85,19 @@ class Game:
 def greeting() -> int:
     """Gets the player decision whether to play alone or together"""
 
-    def right_number(n):
-        return n == 1 or n == 2
-
     strings = ["Welcome", "To a game of Tic-Tac-toe", "First things first."]
     for s in strings:
         print(s)
         time.sleep(1)
     print(
-        "Do you want play as two, or alone against the frustrating AI? (Enter '1' or '2' for number of players): ")
+        "Do you want play together, or alone against the frustrating AI? (Enter '1' or '2' for number of players): ")
 
-    number = 0
-    while not right_number(number):
+    while True:
         number = get_user_input_number()
-        if not right_number(number):
-            print("Please enter '1' to play against the Computer or '2' if you play with a friend.")
+        if number == 1 or number == 2:
+            break
+        print("Please enter '1' to play against the Computer or '2' if you play with a friend.")
+
     print("If you want to quit please enter '0', when prompted to check a field.")
     return number - 1
 
@@ -128,7 +126,7 @@ def print_winner(winner: str):
 
 
 def get_user_input_number() -> int:
-    """Gets user input number"""
+    """Gets number from user input"""
     while True:
         try:
             return int(input())
@@ -137,8 +135,8 @@ def get_user_input_number() -> int:
 
 
 def minmax(board: Board, player_char: str, move: int, depth=0) -> (int, int):
-    """Calculates the best move for the computer to make"""
-    # Base Case if Board is finished
+    """Calculates the best move for the computer to make, for a given board"""
+    # Base Case if the Board is finished
     if board.game_finished():
         player_won = board.get_winner()
         score = 10 - depth if (player_won == player_char) else depth - 10
@@ -157,7 +155,7 @@ def minmax(board: Board, player_char: str, move: int, depth=0) -> (int, int):
         new_board.field[i // 3][i % 3] = player_char
         # Switches char for minmax call
         opponent = 'O' if (player_char == 'X') else 'X'
-        # No need to get best move out of this call, since we already have it in 'i'
+        # No need to get best move out of this call, since we already have it in the index
         move_score = -minmax(new_board, opponent, i, depth + 1)[0]
 
         if move_score >= score:

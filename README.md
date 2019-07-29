@@ -20,3 +20,13 @@ Or since this is a python program, you can also enter
 ```sh
 $ python3 ./game.py
 ```
+
+## How to play
+
+When prompted please enter '1' or '2' to play either Single-player or local Multi-player respectively.
+Afterwards a grid similiar to this form should appear in your terminal. 
+
+![grid](/docs/grid.png)
+
+The numbers denote which number on the keyboard you have to press,
+starting with the upper left and going to the lower right.

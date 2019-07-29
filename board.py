@@ -5,8 +5,7 @@ class Board:
 
     def check_board(self) -> str:
         """Checks field if there is a winner"""
-        player = self.check_rows(self.field) or self.check_rows(self.transpose()) or self.check_diagonals()
-        return player
+        return self.check_rows(self.field) or self.check_rows(self.transpose()) or self.check_diagonals()
 
     def transpose(self) -> list:
         """Returns transpose of the field for column checking"""
@@ -14,43 +13,20 @@ class Board:
 
     def check_rows(self, field: list) -> str:
         """Checks the field if a row is occupied with the same char"""
-        for row in field:
-            if '' not in row and len(set(row)) == 1:
-                return row[0]
-        return ''
+        finished_row = list(filter(lambda row: '' not in row and len(set(row)) == 1, field))
+        return finished_row[0][0] if finished_row else ''
 
     def check_diagonals(self) -> str:
-        """Checks both diagonals of the field if either one of them contain the same character"""
-        diag = [self.field[i][i] for i in range(len(self.field))]
-        if '' not in diag and len(set(diag)) == 1:
-            return diag[0]
-        if self.field[0][2] == self.field[1][1] == self.field[2][0] and self.field[0][2] != '':
-            return self.field[0][2]
-        return ''
-
-    def draw_field(self, field=None):
-        """Prints out a representation of the field to the terminal"""
-        board_copy = self.field[:] if not field else field
-
-        separator = "-------+-------+-------"
-        between_sep = "       |       |       "
-        values = "   {0}   |   {1}   |   {2}   "
-
-        for i in range(11):
-            if (i % 4) == 3:
-                print(separator)
-            elif (i % 2) == 0:
-                print(between_sep)
-            else:
-                row = [" " if x == '' else x for x in board_copy[0]]
-                print(values.format(row[0], row[1], row[2]))
-                board_copy.pop(0)
+        """Checks both diagonals, of the field and if either one of them contain the same character"""
+        diag = [self.field[i][i] for i in range(3)]
+        mirror_diag = [self.field[0][2], self.field[1][1], self.field[2][0]]
+        space_free = '' not in diag or '' not in mirror_diag
+        the_same = len(set(diag)) == 1 or len(set(mirror_diag)) == 1
+        return diag[1] if space_free and the_same else ''
 
     def check_valid_move(self, pos: int) -> bool:
         """Checks if move is out of bounds and field is not already occupied"""
-        if pos < 0 or pos > 8:
-            return False
-        return self.field[pos // 3][pos % 3] == ''
+        return (0 <= pos <= 8) and self.field[pos // 3][pos % 3] == ''
 
     def update_board(self, pos: int, char: str):
         """Inserts in the field at the given position the given char"""
@@ -65,4 +41,5 @@ class Board:
         return self.check_board() or self.check_draw()
 
     def get_winner(self) -> str:
+        """Returns the winning character if a winner exists or '' in a draw"""
         return self.check_board()

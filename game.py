@@ -12,7 +12,7 @@ class Game:
 
     def __init__(self):
         """Starts Tic-tac-toe games until until the player wants to quit"""
-        single_player = userio.greeting()
+        single_player = userio.get_gamemode()
         self.get_other_turn = userio.get_turn if single_player else comp_choice.get_comp_turn
         playing = True
         while playing:

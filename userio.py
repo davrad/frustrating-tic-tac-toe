@@ -26,32 +26,35 @@ def get_number() -> int:
         except ValueError:
             print("Input could not be read. Please enter a number.")
 
-
+    
 def play_again() -> bool:
     """Asks if the player wants to play again"""
     again = ''
     while again != 'y' and again != 'n':
-        again = input("Do you want to play again?[yes/no]\n").strip().lower()[0]
+        word = input("Do you want to play again?[yes/no]\n")
+        again = '' if len(word) == 0 else word.strip().lower()[0]
     return again == 'y'
 
+def greeting():
+    """Greets the players"""
+    strings = [
+        "Welcome", 
+        "To a game of Tic-Tac-toe", 
+        "First things first.",
+        "Do you want play together, or alone against the frustrating AI? (Enter '1' or '2' for number of players): "]
 
-def greeting() -> int:
-    """Gets the player decision whether to play alone or together"""
-
-    strings = ["Welcome", "To a game of Tic-Tac-toe", "First things first."]
     for s in strings:
         print(s)
         time.sleep(1)
-    print(
-        "Do you want play together, or alone against the frustrating AI? (Enter '1' or '2' for number of players): ")
 
-    while True:
-        number = get_number()
-        if number == 1 or number == 2:
-            break
+def get_gamemode() -> int:
+    """Gets the player decision whether to play alone or together"""
+    greeting()
+    number = get_number()
+    while number != 1 and number != 2:
         print("Please enter '1' to play against the Computer or '2' if you play with a friend.")
+        number = get_number()
 
-    print("If you want to quit please enter '0', when prompted to check a field.")
     return number - 1
 
 
@@ -80,16 +83,12 @@ def get_turn(board: Board, *argv) -> int:
     print("Where do you want to set your mark?:")
     print("Please enter a number from 1 to 9")
 
-    valid_move = False
-    pos = 0
+    pos = get_number() - 1
+    valid_move = board.check_valid_move(pos) 
     while not valid_move:
-        pos = get_number()
-        if pos == 0:
-            exit(0)
-        pos -= 1
+        print("Move not possible.")
+        pos = get_number() - 1
         valid_move = board.check_valid_move(pos)
-        if not valid_move:
-            print("Move not possible.")
 
     return pos
 

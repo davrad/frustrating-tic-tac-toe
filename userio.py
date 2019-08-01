@@ -35,6 +35,7 @@ def play_again() -> bool:
         again = '' if len(word) == 0 else word.strip().lower()[0]
     return again == 'y'
 
+
 def greeting():
     """Greets the players"""
     strings = [
@@ -46,6 +47,7 @@ def greeting():
     for s in strings:
         print(s)
         time.sleep(1)
+
 
 def get_gamemode() -> int:
     """Gets the player decision whether to play alone or together"""

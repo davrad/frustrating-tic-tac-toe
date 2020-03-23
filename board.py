@@ -1,6 +1,6 @@
 class Board:
 
-    def __init__(self, field_optional=False):
+    def __init__(self, field_optional=False) -> None:
         self.field = field_optional if field_optional else [['', '', ''], ['', '', ''], ['', '', '']]
 
     def check_board(self) -> str:
@@ -28,7 +28,7 @@ class Board:
         """Checks if move is out of bounds and field is not already occupied"""
         return (0 <= pos <= 8) and self.field[pos // 3][pos % 3] == ''
 
-    def update_board(self, pos: int, char: str):
+    def update_board(self, pos: int, char: str) -> None:
         """Inserts in the field at the given position the given char"""
         self.field[pos // 3][pos % 3] = char
 

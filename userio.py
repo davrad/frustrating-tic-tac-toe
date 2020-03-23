@@ -4,7 +4,7 @@ from os import system
 from board import Board
 
 
-def print_winner(winner: str):
+def print_winner(winner: str) -> None:
     """Prints the winner, or draw"""
     winner_string = '\'' + str(winner) + '\' won.'
     draw = "The game ended in a draw."
@@ -36,7 +36,7 @@ def play_again() -> bool:
     return again == 'y'
 
 
-def greeting():
+def greeting() -> None:
     """Greets the players"""
     strings = [
         "Welcome", 
@@ -60,7 +60,7 @@ def get_gamemode() -> int:
     return number - 1
 
 
-def draw_field(field: list):
+def draw_field(field: list) -> None:
     """Prints out a representation of the field to the terminal"""
     system('clear')
     field = field[:]

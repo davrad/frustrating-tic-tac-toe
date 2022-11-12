@@ -1,13 +1,20 @@
 import copy
 import random
+from typing import Final
 
 from board import Board
 
+PLAYER_CHAR: Final[str] = 'X'
+COMPUTER_CHAR: Final[str] = 'O'
 
-def get_comp_turn(board: Board, comp_char: str) -> int:
+
+def get_comp_turn(board: Board) -> int:
     """Gets the move for the computer player, a random one if its the first turn"""
     print("Calculating...")
-    return int(random.uniform(0, 9)) if first_turn(board) else minmax(board, comp_char, -1)[1]
+    if first_turn(board):
+        return int(random.uniform(0, 9))
+    else:
+        return minmax(board, COMPUTER_CHAR, -1)[1]
 
 
 def first_turn(board: Board) -> bool:

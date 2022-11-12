@@ -1,4 +1,5 @@
 class Board:
+    """Class representing a tic tac toe board"""
 
     def __init__(self, field_optional=False) -> None:
         self.field = field_optional if field_optional else [['', '', ''], ['', '', ''], ['', '', '']]

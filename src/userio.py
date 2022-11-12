@@ -49,15 +49,20 @@ def greeting() -> None:
         time.sleep(1)
 
 
-def get_gamemode() -> int:
-    """Gets the player decision whether to play alone or together"""
+def ask_user_play_singleplayer() -> bool:
+    """
+    Asks the user, whether they want to play single or multiplayer
+    """
+
     greeting()
     number = get_number()
     while number != 1 and number != 2:
         print("Please enter '1' to play against the Computer or '2' if you play with a friend.")
         number = get_number()
 
-    return number - 1
+    if number == 1:
+        return True
+    return False
 
 
 def draw_field(field: list) -> None:
@@ -79,14 +84,14 @@ def draw_field(field: list) -> None:
             field.pop(0)
 
 
-def get_turn(board: Board, *argv) -> int:
+def get_turn(board: Board) -> int:
     """Gets valid move for human player"""
 
     print("Where do you want to set your mark?:")
     print("Please enter a number from 1 to 9")
 
     pos = get_number() - 1
-    valid_move = board.check_valid_move(pos) 
+    valid_move = board.check_valid_move(pos)
     while not valid_move:
         print("Move not possible.")
         pos = get_number() - 1
